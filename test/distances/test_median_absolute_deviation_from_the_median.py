@@ -9,14 +9,16 @@ from distances.median_absolute_deviation_from_the_median import MedianAbsoluteDe
 from distances.sample import Sample
 
 
-class TestIntMedianAbsoluteDeviationFromTheMedian(TestCase):
+class TestMedianAbsoluteDeviationFromTheMedian(TestCase):
 
-    def test_on_should_calculate_the_median_of_absolute_deviations(self):
+    def test_int_on_should_calculate_the_median_of_absolute_deviations(self):
         # Given
         sample = Sample([1, 2, 3, 3, 4, 4, 4, 5, 5.5, 6, 6, 6.5, 7, 7, 7.5, 8, 9, 12, 52, 90])
         mock_absolute_deviation_from_the_median = Mock(spec=AbsoluteDeviationFromTheMedian)
-        distances_from_the_centre = Sample([5.0, 4.0, 3.0, 3.0, 2.0, 2.0, 2.0, 1.0, 0.5, 0.0, 0.0, 0.5, 1.0, 1.0, 1.5, 2.0,
-                                     3.0, 6.0, 46.0, 84.0])
+        distances_from_the_centre = Sample(
+            [5.0, 4.0, 3.0, 3.0, 2.0, 2.0, 2.0, 1.0, 0.5, 0.0, 0.0, 0.5, 1.0, 1.0, 1.5, 2.0,
+             3.0, 6.0, 46.0, 84.0]
+        )
         mock_absolute_deviation_from_the_median.on.return_value = distances_from_the_centre
 
         # When
@@ -24,9 +26,6 @@ class TestIntMedianAbsoluteDeviationFromTheMedian(TestCase):
 
         # Then
         self.assertEqual(2, computed_mad)
-
-
-class TestMedianAbsoluteDeviationFromTheMedian(TestCase):
 
     def test_on_should_calculate_the_median_of_absolute_deviations(self):
         # Given
