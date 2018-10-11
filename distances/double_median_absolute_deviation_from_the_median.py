@@ -12,6 +12,6 @@ class DoubleMedianAbsoluteDeviationFromTheMedian:
 
     def on(self, sample: Sample) -> Iterable:
         left_part, right_part = self.median_pair_of_statistics_producer.split_on(sample)
-        self.mad_repeater.repeat_from(left_part)
-        self.mad_repeater.repeat_from(right_part)
-        return sample
+        mad_repeated_on_left_pair = self.mad_repeater.repeat_from(left_part)
+        mad_repeated_on_right_pair = self.mad_repeater.repeat_from(right_part)
+        return self.median_pair_of_statistics_producer.reassemble(mad_repeated_on_left_pair, mad_repeated_on_right_pair)

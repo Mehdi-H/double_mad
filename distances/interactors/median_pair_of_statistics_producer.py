@@ -22,3 +22,6 @@ class MedianPairOfStatisticsProducer():
     def _subtract_part_of(self, sample: Sample, threshold: float, comparison_operator: callable) -> Sample:
         elements_are_on_this_side_of_the_threshold = comparison_operator(np.array(sample), threshold)
         return Sample(np.array(sample)[np.where(elements_are_on_this_side_of_the_threshold)])
+
+    def reassemble(self, left_part: Sample, right_part: Sample) -> Sample:
+        return left_part + right_part

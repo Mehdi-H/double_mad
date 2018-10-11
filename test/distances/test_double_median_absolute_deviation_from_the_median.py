@@ -18,7 +18,7 @@ class TestDoubleMedianAbsoluteDeviationFromTheMedian(TestCase):
         self.median_pair_of_statistics_producer.split_on.return_value = (left_part, right_part)
 
         # When
-        DoubleMedianAbsoluteDeviationFromTheMedian(self.median_pair_of_statistics_producer, self.mad_repeater).on(skewed_sample)
+        DoubleMedianAbsoluteDeviationFromTheMedian(self.median_pair_of_statistics_producer, Mock()).on(skewed_sample)
 
         # Then
         self.median_pair_of_statistics_producer.split_on.assert_called_with(skewed_sample)
@@ -38,3 +38,22 @@ class TestDoubleMedianAbsoluteDeviationFromTheMedian(TestCase):
         # Then
         expected_calls_in_this_order = [call(left_part), call(right_part)]
         self.mad_repeater.repeat_from.assert_has_calls(expected_calls_in_this_order)
+
+    def test_mad_repeated_samples_should_be_concatenated_in_exact_order(self):
+        # Given
+        left_part, right_part = [1, 4, 4, 4, 5, 5, 5, 5], [7, 7, 8, 10, 16, 30]
+        left_side_mad, right_side_mad = [1, 1, 1, 1, 1, 1, 1, 1], [2, 2, 2, 2, 2, 2]
+        skewed_sample = Sample([1, 4, 4, 4, 5, 5, 5, 5, 7, 7, 8, 10, 16, 30])
+        self.median_pair_of_statistics_producer.split_on.return_value = [left_part, right_part]
+        self.mad_repeater.repeat_from.side_effect = [left_side_mad, right_side_mad]
+
+        # When
+        DoubleMedianAbsoluteDeviationFromTheMedian(
+            self.median_pair_of_statistics_producer,
+            self.mad_repeater
+        ).on(skewed_sample)
+
+        # Then
+        self.median_pair_of_statistics_producer.reassemble.assert_called_with(
+            [1, 1, 1, 1, 1, 1, 1, 1], [2, 2, 2, 2, 2, 2]
+        )
