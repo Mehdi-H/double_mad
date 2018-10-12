@@ -6,12 +6,15 @@ from distances.sample import Sample
 
 class TestMadRepeater(TestCase):
 
+    def setUp(self):
+        self.mad_repeater = MadRepeater()
+
     def test_repeat_from_should_return_a_sample_of_same_length(self):
         # Given
         sample_of_length_3 = Sample([1, 2, 3])
 
         # When
-        mad_repeated_sample = MadRepeater().repeat_from(sample_of_length_3)
+        mad_repeated_sample = self.mad_repeater.repeat_from(sample_of_length_3)
 
         # Then
         self.assertEqual(3, len(mad_repeated_sample))
@@ -21,7 +24,7 @@ class TestMadRepeater(TestCase):
         sample = Sample([1, 2, 3, 3, 4, 4, 4, 5, 5.5, 6, 6, 6.5, 7, 7, 7.5, 8, 9, 12, 52, 90])
 
         # When
-        mad_repeated_sample = MadRepeater().repeat_from(sample)
+        mad_repeated_sample = self.mad_repeater.repeat_from(sample)
 
         # Then
         expected_sample = Sample([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
