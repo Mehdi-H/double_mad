@@ -22,10 +22,10 @@ class TestMedianAbsoluteDeviationFromTheMedian(TestCase):
         mock_absolute_deviation_from_the_median.on.return_value = distances_from_the_centre
 
         # When
-        computed_mad = mad(mock_absolute_deviation_from_the_median).on(sample)
+        computed_distance = mad(mock_absolute_deviation_from_the_median).on(sample)
 
         # Then
-        self.assertEqual(2, computed_mad)
+        self.assertEqual(2, computed_distance)
 
     def test_on_should_calculate_the_median_of_absolute_deviations(self):
         # Given

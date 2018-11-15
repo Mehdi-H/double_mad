@@ -10,4 +10,5 @@ class MadNormalizer:
         self.absolute_deviation_from_the_median = absolute_deviation_from_the_median
 
     def normalize_with(self, sample_to_normalize: Sample, weights: List) -> Sample:
-        return Sample([s / w for s, w in zip(self.absolute_deviation_from_the_median.on(sample_to_normalize), weights)])
+        distances = self.absolute_deviation_from_the_median.on(sample_to_normalize)
+        return Sample([s / w for s, w in zip(distances, weights)])
